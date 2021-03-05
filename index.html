@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page Title</title>
+  <meta charset="UTF-8"/>
+</head>
+<body>
+
+  <button id='rock'>Rock</button>
+  <button id='paper'>Paper</button>
+  <button id='scissors'>Scissors</button>
+
+  <div id='results'>
+
+    <p id="resultText"></p>
+    <p id='playerScore'>Your Score: <span id=playerNumber>0</span></p>
+    <p id='computerScore'>Opponent's Score: <span id=computerNumber>0</span></p>
+
+  </div>
+
+  <script>
+
+const buttons = document.querySelectorAll('button');
+const ourScore = document.querySelector('#playerScore');
+const theirScore = document.querySelector('#computerScore');
+const results = document.querySelector('#resultText');
+
+function computerPlay() {
+  let computerChoices = ["rock", "paper", "scissors"];
+  computerSelection = computerChoices[(Math.floor(Math.random() * 3))];
+  return computerSelection;
+}
+
+buttons.forEach(button => button.addEventListener('click', playRound));
+
+function playRound() {
+  let myScore = document.querySelector('#playerNumber').textContent;
+  let compScore = document.querySelector('#computerNumber').textContent;
+  let outcome = ""
+  playerChoice = this.id;
+  computerChoice = computerPlay();
+  if (computerChoice === playerChoice) {
+    results.textContent = `You chose ${playerChoice},
+    your opponent chose ${computerChoice},
+    YOU TIE, ${playerChoice} and ${computerChoice} are the same!`;
+    outcome = "tie";
+  } else if (computerChoice === "rock" && playerChoice === "scissors" ||
+             computerChoice === "paper" && playerChoice === "rock" ||
+             computerChoice === "scissors" && playerChoice === "paper") {
+    results.textContent = `You chose ${playerChoice}, your opponent chose ${computerChoice}, YOU LOSE, ${computerChoice} beats ${playerChoice}!`;
+    outcome = "lose";
+  } else if (computerChoice === "rock" && playerChoice === "paper" ||
+             computerChoice === "paper" && playerChoice === "scissors" ||
+             computerChoice === "scissors" && playerChoice === "rock") {
+    results.textContent = `You chose ${playerChoice}, your opponent chose ${computerChoice}, YOU WIN, ${playerChoice} beats ${computerChoice}!`;
+    outcome = "win";
+  } 
+    if (outcome === 'win' && parseInt(myScore) === 4) {
+      let currentScore = parseInt(myScore) + 1;
+      document.querySelector('#playerNumber').textContent = currentScore;
+      alert("You win!");
+    } else if (outcome === 'lose' && parseInt(compScore) === 4) {
+      let currentScore = parseInt(compScore) + 1;
+      document.querySelector('#computerNumber').textContent = currentScore;
+      alert("You lose!");
+    } else if (outcome === 'win') {
+      let currentScore = parseInt(myScore) +1;
+      document.querySelector('#playerNumber').textContent = currentScore;
+    } else if (outcome === 'lose') {
+      let currentScore = parseInt(compScore) + 1;
+      document.querySelector('#computerNumber').textContent = currentScore;
+    }
+
+    /*if (parseInt(myScore) === 5) {
+      alert("You win!");
+    }
+
+    if (parseInt(compScore) === 5) {
+      alert("You lose!");
+    }*/
+}
+
+
+/*function game() {
+  outcome = playRound();
+  let myScore = 0;
+  let compScore = 0;
+
+  while (myScore < 5 && theirScore < 5) {
+    if (outcome === 'win') {
+      myScore++;
+      ourScore.textContent = 'Your Score: ' + myScore;
+    } else if (outcome ==='lose') {
+      compScore++;
+      theirScore.textContent = 'Opponent\'s Score: ' + compScore;
+    } 
+  }
+}*/
+  </script>
+
+
+
+
+</body>
+</html>
